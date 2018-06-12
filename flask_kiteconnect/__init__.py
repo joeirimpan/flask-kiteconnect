@@ -48,6 +48,9 @@ class FlaskKiteConnect(object):
         access_token = app.config.get('KITECONNECT_ACCESS_TOKEN')
         if access_token:
             self._client.set_access_token(access_token)
+        if not hasattr(app, 'extensions'):
+            app.extensions = {}
+        app.extensions['kite_client'] = self
 
     def __getattr__(self, name):
         """Proxy methods to the private held object
